@@ -5,7 +5,7 @@ import React from 'react'
 import './Login.css'
 import { withRouter } from 'react-router-dom';
 import {Icon, Form, Divider} from 'semantic-ui-react'
-import axios from './http';
+import http from './http';
 
 class Login extends React.Component {
   constructor (props) {
@@ -26,7 +26,7 @@ class Login extends React.Component {
     })
   }
   handelLogin = async() => {
-    let res = await axios.post('users/login', {uname: this.state.username,pwd: this.state.password})
+    let res = await http.post('users/login', {uname: this.state.username,pwd: this.state.password})
     if(res.meta.status === 200) {
       // 保存token到本地缓存中
       sessionStorage.setItem('mytoken', res.data.token);
