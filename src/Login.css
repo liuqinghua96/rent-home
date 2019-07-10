@@ -1,0 +1,37 @@
+.login-container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.login-container .login-logo {
+  height: 260px;
+  line-height: 260px;
+  background-color: lightseagreen;
+  text-align: center;
+  color: #fff;
+}
+
+.login-container .login-form {
+  padding: 20px;
+}
+
+.login-container .login-form button {
+  background-color: lightseagreen;
+  color: #fff;
+}
+
+.login-container .login-third {
+  text-align: center;
+  margin-top: 20px;
+}
+.login-container .login-third i {
+  margin: 30px;
+  color: limegreen;
+}
+
+.login-container .login-third i:first-child {
+  color: dodgerblue;
+}
