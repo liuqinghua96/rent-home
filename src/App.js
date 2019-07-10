@@ -5,9 +5,7 @@ import 'semantic-ui-css/semantic.min.css'
 import Login from './login'
 
 /* function Login () {
-  return (<div>
-    <Button primary size="big">点击按钮</Button>
-  </div>)
+  return (<div>登录</div>)
 } */
 function Home () {
   return (<div>首页</div>)
