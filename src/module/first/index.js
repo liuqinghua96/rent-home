@@ -2,19 +2,15 @@ import React from 'react'
 import ImageGallery from 'react-image-gallery'
 import "react-image-gallery/styles/css/image-gallery.css"
 import {Input} from 'semantic-ui-react'
+import http from '../../http'
 import './index.css'
 
 class First extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      calleryList: [{
-        original: 'http://47.96.21.88:8086/public/1.png'
-      }, {
-        original: 'http://47.96.21.88:8086/public/2.png'
-      }, {
-        original: 'http://47.96.21.88:8086/public/3.png'
-      }]
+      // 轮播图数据
+      galleryList: []
     }
   }
   render () {
@@ -29,9 +25,19 @@ class First extends React.Component {
           autoPlay={true}
           showFullscreenButton={false}
           showPlayButton={false}
-          items={this.state.calleryList} />
+          items={this.state.galleryList} />
       </div>
     </div>)
+  }
+  getGalleryData = async () => {
+    let {data} = await http.post('homes/swipe')
+    this.setState({
+      galleryList: data.list
+    })
+  }
+  componentDidMount () {
+    // 动态获取轮播图数据
+    this.getGalleryData()
   }
 }
 
