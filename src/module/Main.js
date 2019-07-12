@@ -4,18 +4,10 @@ import './Main.css'
 import {Grid, Icon} from 'semantic-ui-react'
 import {Link, Route, Switch, Redirect} from 'react-router-dom'
 
-function Index () {
-  return (<div>index</div>)
-}
-function Info () {
-  return (<div>info</div>)
-}
-function Chat () {
-  return (<div>chat</div>)
-}
-function My () {
-  return (<div>my</div>)
-}
+import First from './first/index'
+import Info from './info/index'
+import Chat from './chat/index'
+import My from './my/index'
 
 class MenuItem extends React.Component {
   render () {
@@ -42,7 +34,7 @@ class Home extends React.Component {
       {/* 内容区域 */}
       <div className="main-content">
         <Switch>
-          <Route path="/home/index" component={Index} />
+          <Route path="/home/index" component={First} />
           <Route path='/home/info' component={Info}/>
           <Route path="/home/chat" component={Chat} />
           <Route path="/home/my" component={My} />
