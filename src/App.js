@@ -4,13 +4,14 @@ import './App.css';
 import 'semantic-ui-css/semantic.min.css'
 import AuthCheck from './authCheck'
 import Login from './login'
+import Home from './module/Main'
 
 /* function Login () {
   return (<div>登录</div>)
 } */
-function Home () {
+/* function Home () {
   return (<div>首页</div>)
-}
+} */
 
 function App() {
   return (

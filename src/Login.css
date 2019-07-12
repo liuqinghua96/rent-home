@@ -15,7 +15,7 @@
 }
 
 .login-container .login-form {
-  padding: 20px;
+  padding: 30px 20px;
 }
 
 .login-container .login-form button {
@@ -28,7 +28,7 @@
   margin-top: 20px;
 }
 .login-container .login-third i {
-  margin: 30px;
+  margin: 40px;
   color: limegreen;
 }
 
