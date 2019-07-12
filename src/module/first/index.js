@@ -1,7 +1,7 @@
 import React from 'react'
 import ImageGallery from 'react-image-gallery'
 import "react-image-gallery/styles/css/image-gallery.css"
-import {Input, Grid, Icon, Item} from 'semantic-ui-react'
+import {Input, Grid, Icon, Item, Button, Dimmer, Loader} from 'semantic-ui-react'
 import http from '../../http'
 import './index.css'
 
@@ -50,6 +50,77 @@ class Info extends React.Component {
   }
 }
 
+// 封装问答组件
+class Faq extends React.Component {
+  render () {
+    let faq = this.props.data.map(item=>{
+      let tags = item.question_tag.split(',').map((tag, index)=>{
+        return <Button key={index} basic color='green' size='mini'>{tag}</Button>;
+      });
+      return (
+        <li key={item.question_id}>
+          <div>
+            <Icon name='question circle outline' />
+            <span>{item.question_name}</span>
+          </div>
+          <div>
+            {tags}
+            <div>{item.atime} ● <Icon name='comment alternate outline' /> {item.qnum}</div>
+          </div>
+        </li>
+      );
+    });
+    return (<div className="home-ask">
+      <div className="home-ask-title">好客问答</div>
+      <ul>
+        {faq}
+      </ul>
+    </div>)
+  }
+}
+
+class House extends React.Component {
+  render () {
+    let titles = ['最新开盘','二手精选','租一个家']
+    let houseList = titles.map((item,index) => {
+      let content = this.props.data.filter(item=>{
+        return item.home_type === index + 1
+      })
+      let contentDataList = content.map(item=>{
+        let tags = item.home_tags.split(',').map((tag,i) => {
+          return <Button key={i} basic color='green' size='mini'>{tag}</Button>
+        })
+        return (<Item key={item.id}>
+          <Item.Image src={'http://47.96.21.88:8086/public/home.png'}/>
+          <Item.Content>
+            <Item.Header>{item.home_name}</Item.Header>
+            <Item.Meta>
+              <span className='cinema'>{item.home_desc}</span>
+            </Item.Meta>
+            <Item.Description>
+              {tags}
+            </Item.Description>
+            <Item.Description>{item.home_price}</Item.Description>
+          </Item.Content>
+        </Item>)
+      })
+      return (<div key={index}>
+        <div className='home-hire-title'>{item}</div>
+        <Item.Group divided unstackable>
+          {/*房源列表*/}
+          {contentDataList}
+        </Item.Group>
+      </div>)
+    })
+    return (
+      <div>
+        {/* 房源信息 */}
+        {houseList}
+      </div>
+    )
+  }
+}
+
 class First extends React.Component {
   constructor (props) {
     super(props)
@@ -57,7 +128,10 @@ class First extends React.Component {
       // 轮播图数据
       galleryList: [],
       menuList: [],
-      info: []
+      info: [],
+      faq: [],
+      house: [],
+      isLoading: true
     }
   }
   render () {
@@ -67,6 +141,10 @@ class First extends React.Component {
         <Input fluid icon='search' placeholder='请输入关键字...'/>
       </div>
       <div className="home-content">
+        {/* 加载数据时的遮罩效果 */}
+        <Dimmer inverted active={this.state.isLoading}>
+          <Loader>加载中...</Loader>
+        </Dimmer>
         {/* 轮播图 */}
         <ImageGallery 
           showThumbnails={false}
@@ -79,6 +157,10 @@ class First extends React.Component {
         <Menus data={this.state.menuList} />
         {/* 资讯展示 */}
         <Info data={this.state.info}/>
+        {/* 频繁问答 */}
+        <Faq data={this.state.faq} />
+        {/* 房源列表 */}
+        <House data={this.state.house} />
       </div>
     </div>)
   }
@@ -94,6 +176,8 @@ class First extends React.Component {
     this.getData('/homes/swipe', 'galleryList')
     this.getData('/homes/menu', 'menuList')
     this.getData('/homes/info', 'info')
+    this.getData('/homes/faq', 'faq')
+    this.getData('/homes/house', 'house')
   }
 }
 
