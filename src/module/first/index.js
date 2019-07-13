@@ -1,15 +1,16 @@
 import React from 'react'
 import ImageGallery from 'react-image-gallery'
 import "react-image-gallery/styles/css/image-gallery.css"
+import {withRouter} from 'react-router-dom'
 import {Input, Grid, Icon, Item, Button, Dimmer, Loader} from 'semantic-ui-react'
 import http from '../../http'
 import './index.css'
 
 // 封装导航菜单组件
 class Menus extends React.Component {
-  render () {
+  render() {
     let menuData = this.props.data.map(item => {
-      return (<Grid.Column key={item.id}>
+      return (<Grid.Column onClick={this.props.jump.bind(this,item.menu_name,item.id)} key={item.id}>
           <div className='home-menu-item'>
             <Icon name='home' size='big' />
           </div>
@@ -135,6 +136,9 @@ class First extends React.Component {
       isLoading: true
     }
   }
+  jumpToList = (name,id) => {
+    this.props.history.push('/home/list',{name:name,type:id})
+  }
   render () {
     return (<div className="home-container">
       <div className="home-topbar">
@@ -155,7 +159,7 @@ class First extends React.Component {
           showPlayButton={false}
           items={this.state.galleryList} />
         {/* 菜单导航 */}
-        <Menus data={this.state.menuList} />
+        <Menus data={this.state.menuList} jump={this.jumpToList} />
         {/* 资讯展示 */}
         <Info data={this.state.info}/>
         {/* 频繁问答 */}
@@ -170,18 +174,24 @@ class First extends React.Component {
     let {data} = await http.post(path)
     this.setState({
       [stateItem]: data.list,
+      // count用来记录成功返回数据的条数
       count: this.state.count+1,
+      // isLoading用来控制遮罩层的显示与隐藏：当count为4时的下一次正好5条数据全部接收成功
       isLoading: this.state.count===4?false:true
     })
   }
   componentDidMount () {
     // 动态获取轮播图数据
     this.getData('/homes/swipe', 'galleryList')
+    // 获取菜单列表动态数据
     this.getData('/homes/menu', 'menuList')
+    // 获取信息资讯数据
     this.getData('/homes/info', 'info')
+    // 获取问答数据
     this.getData('/homes/faq', 'faq')
+    // 获取房源列表数据
     this.getData('/homes/house', 'house')
   }
 }
 
-export default First
+export default withRouter(First)

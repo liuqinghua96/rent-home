@@ -5,6 +5,7 @@ import {Grid, Icon} from 'semantic-ui-react'
 import {Link, Route, Switch, Redirect} from 'react-router-dom'
 
 import First from './first/index'
+import List from './first/list'
 import Info from './info/index'
 import Chat from './chat/index'
 import My from './my/index'
@@ -38,6 +39,7 @@ class Home extends React.Component {
           <Route path='/home/info' component={Info}/>
           <Route path="/home/chat" component={Chat} />
           <Route path="/home/my" component={My} />
+          <Route path="/home/list" component={List} />
           <Redirect from='/home' to='/home/index'/>
         </Switch>
       </div>
