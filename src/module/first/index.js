@@ -131,6 +131,7 @@ class First extends React.Component {
       info: [],
       faq: [],
       house: [],
+      count: 0,
       isLoading: true
     }
   }
@@ -168,7 +169,9 @@ class First extends React.Component {
   getData = async (path,stateItem) => {
     let {data} = await http.post(path)
     this.setState({
-      [stateItem]: data.list
+      [stateItem]: data.list,
+      count: this.state.count+1,
+      isLoading: this.state.count===4?false:true
     })
   }
   componentDidMount () {
