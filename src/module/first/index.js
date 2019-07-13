@@ -142,6 +142,8 @@ class First extends React.Component {
       history.push('/home/list',{name:name,type:id})
     } else if (name === '计算器') {
       history.push('/home/calc')
+    } else if (name === '地图找房') {
+      history.push('/home/map')
     }
   }
   render () {
