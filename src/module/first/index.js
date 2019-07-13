@@ -137,7 +137,12 @@ class First extends React.Component {
     }
   }
   jumpToList = (name,id) => {
-    this.props.history.push('/home/list',{name:name,type:id})
+    let {history} = this.props
+    if(name==='二手房'||name==='新房'||name==='租房'||name==='海外') {
+      history.push('/home/list',{name:name,type:id})
+    } else if (name === '计算器') {
+      history.push('/home/calc')
+    }
   }
   render () {
     return (<div className="home-container">

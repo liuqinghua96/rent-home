@@ -6,6 +6,7 @@ import {Link, Route, Switch, Redirect} from 'react-router-dom'
 
 import First from './first/index'
 import List from './first/list'
+import Calc from './first/calc'
 import Info from './info/index'
 import Chat from './chat/index'
 import My from './my/index'
@@ -40,6 +41,7 @@ class Home extends React.Component {
           <Route path="/home/chat" component={Chat} />
           <Route path="/home/my" component={My} />
           <Route path="/home/list" component={List} />
+          <Route path="/home/calc" component={Calc} />
           <Redirect from='/home' to='/home/index'/>
         </Switch>
       </div>
