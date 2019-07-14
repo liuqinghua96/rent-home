@@ -11,7 +11,11 @@ class Loan extends React.Component {
       type: 1,
       total: 0,
       year: 1,
-      rate: 1
+      rate: 1,
+      chartData: [
+        {value:335, name:'总利息'},
+        {value:810, name:'房间总额'}
+      ]
     }
   }
   // 修改贷款方式
@@ -41,10 +45,49 @@ class Loan extends React.Component {
     });
   }
   handleCalc = () => {
-    console.log(this.state.total)
-    console.log(this.state.type)
-    console.log(this.state.year)
-    console.log(this.state.rate)
+    this.setState({
+      chartData: [{
+        value: this.state.chartData[0].value + parseInt(this.state.total),
+        name:'总利息'
+      }, {
+        value: 810,
+        name:'房间总额'
+      }]
+    })
+  }
+  getOption = () => {
+    return {
+      title : {
+          text: '贷款利率比',
+          subtext: '纯属虚构',
+          x:'center'
+      },
+      tooltip : {
+          trigger: 'item',
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
+      },
+      legend: {
+          orient: 'vertical',
+          left: 'left',
+          data: ['总利息','贷款总额']
+      },
+      series : [
+          {
+              name: '模拟统计',
+              type: 'pie',
+              radius : '55%',
+              center: ['50%', '60%'],
+              data: this.state.chartData,
+              itemStyle: {
+                  emphasis: {
+                      shadowBlur: 10,
+                      shadowOffsetX: 0,
+                      shadowColor: 'rgba(0, 0, 0, 0.5)'
+                  }
+              }
+          }
+      ]
+    }
   }
   render () {
     // 贷款方式
@@ -112,7 +155,7 @@ class Loan extends React.Component {
       </Grid.Row>
       <Grid.Row>
         <Grid.Column width={16}>
-          {/* <ReactEcharts ref={(e) => { this.reactEchart = e;}} option={this.getOption()}/> */}
+          <ReactEcharts option={this.getOption()}/>
         </Grid.Column>
       </Grid.Row>
     </Grid>)
