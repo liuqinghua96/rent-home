@@ -206,6 +206,9 @@
 }
 
 /* 计算器样式 */
+.ui.attached.tabular.menu {
+  margin-bottom: 20px;
+}
 .home-calc {
   position: fixed;
   bottom: 50px;
@@ -275,5 +278,3 @@
   left: 10px;
   top: 8px;
 }
-
-
