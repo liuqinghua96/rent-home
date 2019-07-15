@@ -3,6 +3,7 @@ import './loadMore.css'
 import Tloader from 'react-touch-loader';
 import {Icon, Item, Button} from 'semantic-ui-react'
 import http from '../../http'
+import { thisExpression } from '@babel/types';
 
 class CommonList extends React.Component {
   render() {
@@ -103,7 +104,7 @@ class LoadMore extends React.Component {
       pagesize: this.state.pagesize
     })
     this.setState({
-      list: data,
+      list: this.state.pagenum===0?data:[...this.state.list,...data],
       total:total,
       initializing:2
     });
@@ -120,7 +121,18 @@ class LoadMore extends React.Component {
   }
 
   loadMore = (resolve, reject) => {
-    // 处理刷新
+    let {pagenum,pagesize,total} = this.state
+    // 处理加载更多
+    this.setState({
+      pagenum: pagenum + pagesize,
+      initializing: 1
+    },() => {
+      this.loadData()
+      // 没有更多数据了，终止接口继续调用
+      this.setState({
+        hasMore: this.state.pagenum+pagesize < total? true:false
+      })
+    })
     resolve();
   }
   componentDidMount () {
@@ -137,7 +149,7 @@ class LoadMore extends React.Component {
         hasMore={hasMore}
         initializing={initializing}
         >
-        {/*里面就是列表信息*/}
+        {/*插槽----里面就是列表信息*/}
         <ul>
           <CommonList type={type} list={list}/>
         </ul>
