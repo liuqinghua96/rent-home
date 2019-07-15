@@ -8174,6 +8174,11 @@ react-swipeable@^5.2.0:
   dependencies:
     prop-types "^15.6.2"
 
+react-touch-loader@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.npm.taobao.org/react-touch-loader/download/react-touch-loader-1.1.4.tgz#ccd49012b645d2492113178684f9f4ecae742ab6"
+  integrity sha1-zNSQErZF0kkhExeGhPn07K50KrY=
+
 react@^16.4.0, react@^16.8.6:
   version "16.8.6"
   resolved "https://registry.npm.taobao.org/react/download/react-16.8.6.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact%2Fdownload%2Freact-16.8.6.tgz#ad6c3a9614fd3a4e9ef51117f54d888da01f2bbe"

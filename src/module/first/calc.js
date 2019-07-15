@@ -14,7 +14,7 @@ class Loan extends React.Component {
       rate: 1,
       chartData: [
         {value:335, name:'总利息'},
-        {value:810, name:'房间总额'}
+        {value:810, name:'贷款总额'}
       ]
     }
   }
@@ -51,7 +51,7 @@ class Loan extends React.Component {
         name:'总利息'
       }, {
         value: 810,
-        name:'房间总额'
+        name:'贷款总额'
       }]
     })
   }
