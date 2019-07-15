@@ -1,11 +1,69 @@
 import React from 'react'
 import './loadMore.css'
 import Tloader from 'react-touch-loader';
-import {Icon, Item, Button} from 'semantic-ui-react'
+import {Icon, Item, Button, Modal, TextArea} from 'semantic-ui-react'
 import http from '../../http'
-import { thisExpression } from '@babel/types';
+
+// 问答弹框组件
+class FaqWindow extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      info: ''
+    }
+  }
+  handleInfo = (e) => {
+    this.setState({
+      info: e.target.value
+    });
+  }
+  submitHandle = async () => {
+    let {meta:{status}} = await http.post('infos/question', {
+      question: this.state.info
+    })
+    if(status === 200) {
+      this.props.close()
+    }else {
+      alert('服务器内部错误，请与管理员联系~~')
+    }
+    this.setState({
+      info: ''
+    })
+  }
+  render() {
+    return (<div>
+      <Modal size='small' onClose={this.props.close} open={this.props.open}>
+        <Modal.Header>发表评论</Modal.Header>
+        <Modal.Content>
+          <TextArea value={this.state.info} onChange={this.handleInfo} style={{width:'100%'}} placeholder='Tell us more' />
+        </Modal.Content>
+        <Modal.Actions>
+          <Button onClick={this.props.close} negative>取消</Button>
+          <Button positive onClick={this.submitHandle} icon='checkmark' labelPosition='right' content='发表' />
+        </Modal.Actions>
+      </Modal>
+    </div>)
+  }
+}
 
 class CommonList extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      // 控制弹框是否显示
+      isOpen:false
+    }
+  }
+  hideWindow = () => {
+    this.setState({
+      isOpen: false
+    })
+  }
+  showWindow = () => {
+    this.setState({
+      isOpen: true
+    })
+  }
   render() {
     let { type, list } = this.props;
     // 资讯列表和头条列表模板类似 type == 1 || type == 2
@@ -63,8 +121,10 @@ class CommonList extends React.Component {
       });
       listTpl = (
         <div>
+          {/*弹窗效果*/}
+          <FaqWindow close={this.hideWindow} open={this.state.isOpen}/>
           <div className="info-ask-btn">
-            <Button fluid color='green'>快速提问</Button>
+            <Button fluid color='green' onClick={this.showWindow}>快速提问</Button>
           </div>
           <div className="info-ask-list">
             {faqInfo}
@@ -106,8 +166,9 @@ class LoadMore extends React.Component {
     this.setState({
       list: this.state.pagenum===0?data:[...this.state.list,...data],
       total:total,
-      initializing:2
-    });
+      initializing:2,
+      hasMore: this.state.pagenum+this.state.pagesize < total? true:false
+    })
   }
   refresh = (resolve, reject) => {
     // 处理刷新
@@ -121,17 +182,13 @@ class LoadMore extends React.Component {
   }
 
   loadMore = (resolve, reject) => {
-    let {pagenum,pagesize,total} = this.state
+    let {pagenum,pagesize} = this.state
     // 处理加载更多
     this.setState({
       pagenum: pagenum + pagesize,
       initializing: 1
     },() => {
       this.loadData()
-      // 没有更多数据了，终止接口继续调用
-      this.setState({
-        hasMore: this.state.pagenum+pagesize < total? true:false
-      })
     })
     resolve();
   }
