@@ -88,7 +88,9 @@ class LoadMore extends React.Component {
       // 每页加载条数
       pagesize: 2,
       // 控制是否还有更多数据
-      hasMore: true
+      hasMore: true,
+      // 控制进度条开始或结束：开始为1，结束为2
+      initializing: 1
     }
   }
   loadData = async () => {
@@ -102,11 +104,18 @@ class LoadMore extends React.Component {
     })
     this.setState({
       list: data,
-      total:total
+      total:total,
+      initializing:2
     });
   }
   refresh = (resolve, reject) => {
     // 处理刷新
+    this.setState({
+      pagenum: 0,
+      initializing:1
+    },()=> {
+      this.loadData()
+    })
     resolve();
   }
 
@@ -118,7 +127,7 @@ class LoadMore extends React.Component {
     this.loadData()
   }
   render () {
-    let { hasMore, list } = this.state;
+    let { hasMore, list, initializing } = this.state;
     let { type } = this.props;
     return (<div className='view'>
       <Tloader
@@ -126,7 +135,7 @@ class LoadMore extends React.Component {
         onRefresh={this.refresh}
         onLoadMore={this.loadMore}
         hasMore={hasMore}
-        initializing={0}
+        initializing={initializing}
         >
         {/*里面就是列表信息*/}
         <ul>
