@@ -10,6 +10,7 @@ import Calc from './first/calc'
 import Map from './first/map'
 import Info from './info/index'
 import Chat from './chat/index'
+import ChatWindow from './chat/chatWindow'
 import My from './my/index'
 
 class MenuItem extends React.Component {
@@ -44,6 +45,7 @@ class Home extends React.Component {
           <Route path="/home/list" component={List} />
           <Route path="/home/calc" component={Calc} />
           <Route path="/home/map" component={Map} />
+          <Route path="/home/cwin" component={ChatWindow} />
           <Redirect from='/home' to='/home/index'/>
         </Switch>
       </div>
