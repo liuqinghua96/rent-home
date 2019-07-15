@@ -1,23 +1,24 @@
 import React from 'react'
 import './index.css'
 import {Tab} from 'semantic-ui-react'
+import LoadMore from './loadMore'
 
 // 资讯列表
 class Msg extends React.Component {
   render() {
-    return (<div>资讯列表</div>)
+    return <LoadMore type={1} />
   }
 }
 // 头条列表
 class Top extends React.Component {
   render() {
-    return (<div>头条列表</div>)
+    return <LoadMore type={2} />
   }
 }
 // 问答列表
 class Faq extends React.Component {
   render() {
-    return (<div>问答列表</div>)
+    return <LoadMore type={3} />
   }
 }
 
