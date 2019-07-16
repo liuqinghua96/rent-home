@@ -34,7 +34,7 @@
   float: left;
 }
 .chat-window-content ul li span {
-  display: inline-block;
+  /* display: inline-block; */
   font-size: 20px;
   background-color: #fff;
   padding: 5px 10px;

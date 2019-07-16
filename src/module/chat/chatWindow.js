@@ -19,8 +19,10 @@ class ChatWindow extends React.Component {
   }
   render() {
     let listInfo = this.state.list.map(item=>{
+      let currentId = parseInt(sessionStorage.getItem('uid'))
+      let cName = currentId === item.from_user?'chat-info-right': 'chat-info-left'
       return (
-        <li key={item.id}>
+        <li className={cName} key={item.id}>
           <img src={'http://47.96.21.88:8086/' + item.avatar} alt=""/>
           <span>{item.chat_msg}</span>
         </li>
@@ -40,7 +42,7 @@ class ChatWindow extends React.Component {
         <div className="chat-window-input">
           <Form>
             <TextArea placeholder='请输入内容...' />
-            <Button >关闭</Button>
+            <Button onClick={this.goBack}>关闭</Button>
             <Button primary >发送</Button>
           </Form>
         </div>
